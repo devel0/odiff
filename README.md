@@ -52,6 +52,31 @@ Parameters:
 
 ```
 
+## usage
+
+this tool is useful to compare two big files with minor changes between and to view them
+
+```sh
+devel0@tuf:~$ odiff -s -d /home/devel0/tmp/test1 /home/devel0/tmp/test | less
+
+--------------------------------------------------
+max changed chars per line           1           1
+size                         120850129   120506488
+lines                           343641      343641
+line differs                    343641      343641
+line differs (%)                 100.0       100.0
+char differs                    343641           0
+char differs (%)                   0.3         0.0
+
+file1 | file2
+,     |      
+,     |      
+,     |      
+,     |      
+,     |      
+,     |      
+```
+
 ## How this project was built
 
 ```sh
