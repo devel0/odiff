@@ -11,9 +11,7 @@
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/odiff/bin/Debug/netcoreapp3.0/odiff.dll",
-            "args": [                                
-                "/home/devel0/tmp/file1.csv",
-                "/home/devel0/tmp/file2.csv"
+            "args": [                    
             ],
             "cwd": "${workspaceFolder}/odiff",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
