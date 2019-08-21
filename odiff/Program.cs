@@ -54,25 +54,45 @@ namespace onlydiff
                                     var len2 = line2.Length;
                                     var lenmax = Max(len1, len2);
 
-                                    for (int i = 0; i < lenmax; ++i)
+                                    int i1 = 0;
+                                    int i2 = 0;
+
+                                    while (true)
                                     {
-                                        if (i < len1 && i < len2)
+                                        if (line1[i1] != line2[i2])
                                         {
-                                            if (line1[i] != line2[i])
+                                            ++changed;                                            
+
+                                            if (i1 < len1 && line1[i1 + 1] == line2[i2])
                                             {
-                                                ++changed;
-                                                ++charDiffers1;
+                                                ++charDiffers1;                                            
+                                                ++i1;
+                                            }
+                                            else if (i2 < len2 && line2[i2 + 1] == line1[i1])
+                                            {
+                                                ++i2;
                                                 ++charDiffers2;
                                             }
                                         }
                                         else
                                         {
-                                            ++changed;
-
-                                            if (i < len1)
-                                                ++charDiffers1;
-                                            else if (i < len2)
-                                                ++charDiffers2;
+                                            ++i1;
+                                            ++i2;
+                                        }
+                                        if (i1 >= len1 && i2 >= len2) break;
+                                        else if (i1 >= len1)
+                                        {
+                                            var r = len2 - i2;
+                                            changed += r;
+                                            charDiffers2 += r;
+                                            break;
+                                        }
+                                        else if (i2 >= len2)
+                                        {
+                                            var r = len1 - i1;
+                                            changed += r;
+                                            charDiffers1 += r;
+                                            break;
                                         }
                                     }
 
@@ -147,15 +167,15 @@ namespace onlydiff
                                     System.Console.WriteLine(tblOut.TableFormat(
                                         new[]
                                         {
-                                        "",
-                                        "file1",
-                                        "file2"
+                                            "",
+                                            "file1",
+                                            "file2"
                                         },
                                         new[]
                                         {
-                                        ColumnAlignment.left,
-                                        ColumnAlignment.right,
-                                        ColumnAlignment.right
+                                            ColumnAlignment.left,
+                                            ColumnAlignment.right,
+                                            ColumnAlignment.right
                                         }));
                                 }
 
@@ -187,6 +207,44 @@ namespace onlydiff
                                     var sb1 = new StringBuilder();
                                     var sb2 = new StringBuilder();
 
+                                    int i1 = 0;
+                                    int i2 = 0;
+
+                                    while (true)
+                                    {
+                                        if (line1[i1] != line2[i2])
+                                        {                                            
+                                            if (i1 < len1 && line1[i1 + 1] == line2[i2])
+                                            {
+                                                sb1.Append(line1[i1]);
+                                                ++i1;
+                                            }
+                                            else if (i2 < len2 && line2[i2 + 1] == line1[i1])
+                                            {
+                                                sb1.Append(line2[i2]);
+                                                ++i2;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            ++i1;
+                                            ++i2;
+                                        }
+                                        if (i1 >= len1 && i2 >= len2) break;
+                                        else if (i1 >= len1)
+                                        {
+                                            sb2.Append(line2.Substring(i2));
+                                            break;
+                                        }
+                                        else if (i2 >= len2)
+                                        {
+                                            sb1.Append(line1.Substring(i1));
+                                            break;
+                                        }
+                                    }
+
+                                    /*
+
                                     for (int i = 0; i < lenmax; ++i)
                                     {
                                         if (i < len1 && i < len2)
@@ -205,7 +263,7 @@ namespace onlydiff
                                                 sb2.Append(line2[i]);
                                         }
                                     }
-
+*/
                                     if (firstLine)
                                     {
                                         System.Console.WriteLine($"{"file1".Align(W)} | {"file2".Align(W)}");
