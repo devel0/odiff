@@ -61,16 +61,23 @@ namespace onlydiff
                                     {
                                         if (line1[i1] != line2[i2])
                                         {
-                                            ++changed;                                            
+                                            ++changed;
 
-                                            if (i1 < len1 && line1[i1 + 1] == line2[i2])
+                                            if (i1 < len1 - 1 && line1[i1 + 1] == line2[i2])
                                             {
-                                                ++charDiffers1;                                            
+                                                ++charDiffers1;
                                                 ++i1;
                                             }
-                                            else if (i2 < len2 && line2[i2 + 1] == line1[i1])
+                                            else if (i2 < len2 - 1 && line2[i2 + 1] == line1[i1])
                                             {
                                                 ++i2;
+                                                ++charDiffers2;
+                                            }
+                                            else
+                                            {
+                                                ++i1;
+                                                ++i2;
+                                                ++charDiffers1;
                                                 ++charDiffers2;
                                             }
                                         }
@@ -82,14 +89,14 @@ namespace onlydiff
                                         if (i1 >= len1 && i2 >= len2) break;
                                         else if (i1 >= len1)
                                         {
-                                            var r = len2 - i2;
+                                            var r = len2 - i2 - 1;
                                             changed += r;
                                             charDiffers2 += r;
                                             break;
                                         }
                                         else if (i2 >= len2)
                                         {
-                                            var r = len1 - i1;
+                                            var r = len1 - i1 - 1;
                                             changed += r;
                                             charDiffers1 += r;
                                             break;
@@ -213,15 +220,20 @@ namespace onlydiff
                                     while (true)
                                     {
                                         if (line1[i1] != line2[i2])
-                                        {                                            
-                                            if (i1 < len1 && line1[i1 + 1] == line2[i2])
+                                        {
+                                            if (i1 < len1 - 1 && line1[i1 + 1] == line2[i2])
                                             {
                                                 sb1.Append(line1[i1]);
                                                 ++i1;
                                             }
-                                            else if (i2 < len2 && line2[i2 + 1] == line1[i1])
+                                            else if (i2 < len2 - 1 && line2[i2 + 1] == line1[i1])
                                             {
                                                 sb1.Append(line2[i2]);
+                                                ++i2;
+                                            }
+                                            else
+                                            {
+                                                ++i1;
                                                 ++i2;
                                             }
                                         }
