@@ -52,6 +52,20 @@ Parameters:
 
 ```
 
+## output example
+
+```
+                              file1    file2
+--------------------------------------------
+max changed chars per line        2        2
+size                         227939   231139
+lines                          1601     1601
+line differs                   1600     1600
+line differs (%)               99.9     99.9
+char differs                   3200     3200
+char differs (%)                1.4      1.4
+```
+
 ## How this project was built
 
 ```sh
