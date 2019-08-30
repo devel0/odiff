@@ -59,6 +59,20 @@ namespace onlydiff
 
                                     while (true)
                                     {
+                                        if (len1 == 0)
+                                        {
+                                            var r = len2 - i2 - 1;
+                                            changed += r;
+                                            charDiffers2 += r;
+                                            break;
+                                        }
+                                        else if (len2 == 0)
+                                        {
+                                            var r = len1 - i1 - 1;
+                                            changed += r;
+                                            charDiffers1 += r;
+                                            break;
+                                        }
                                         if (line1[i1] != line2[i2])
                                         {
                                             ++changed;
@@ -219,6 +233,17 @@ namespace onlydiff
 
                                     while (true)
                                     {
+                                        if (len1 == 0)
+                                        {
+                                            sb2.Append(line2.Substring(i2));
+                                            break;
+                                        }
+                                        else if (len2 == 0)
+                                        {
+                                            sb1.Append(line1.Substring(i1));
+                                            break;
+                                        }
+                                        
                                         if (line1[i1] != line2[i2])
                                         {
                                             if (i1 < len1 - 1 && line1[i1 + 1] == line2[i2])
