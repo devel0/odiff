@@ -12,15 +12,15 @@ namespace onlydiff
     {
         static void Main(string[] args)
         {
-            var cmdline = new CmdlineParser("Shows only difference between files", (p) =>
+            CmdlineParser.Create("Shows only difference between files", (p) =>
             {
                 var showStats = p.AddShortLong("s", "all-stats", "shows all stats informations");
-                var showDiff = p.AddShortLong("d", "show-differences", "shows characters difference");
+                var showDiff = p.AddShortLong("d", "show-differences", "shows characters difference");                
 
-                var file1 = p.AddParameter("file1", "first file", mandatory: true);
-                var file2 = p.AddParameter("file2", "second file", mandatory: true);
+                var file1 = p.AddMandatoryParameter("file1", "first file");
+                var file2 = p.AddMandatoryParameter("file2", "second file");
 
-                p.OnCmdlineMatch = () =>
+                p.OnCmdlineMatch(() =>
                 {
                     var charDiffers1 = 0;
                     var charDiffers2 = 0;
@@ -280,33 +280,15 @@ namespace onlydiff
                                         }
                                     }
 
-                                    /*
-
-                                    for (int i = 0; i < lenmax; ++i)
-                                    {
-                                        if (i < len1 && i < len2)
-                                        {
-                                            if (line1[i] != line2[i])
-                                            {
-                                                sb1.Append(line1[i]);
-                                                sb2.Append(line2[i]);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (i < len1)
-                                                sb1.Append(line1[i]);
-                                            else if (i < len2)
-                                                sb2.Append(line2[i]);
-                                        }
-                                    }
-*/
                                     if (firstLine)
                                     {
                                         System.Console.WriteLine($"{"file1".Align(W)} | {"file2".Align(W)}");
                                         firstLine = false;
                                     }
-                                    System.Console.WriteLine($"{sb1.ToString().Align(W)} | {sb2.ToString().Align(W)}");
+                                    var s1 = sb1.ToString();
+                                    var s2 = sb2.ToString();
+                                    if (!string.IsNullOrWhiteSpace(s1) || !string.IsNullOrWhiteSpace(s2))
+                                        System.Console.WriteLine($"{s1.ToString().Align(W)} | {s2.ToString().Align(W)}");
                                 }
 
                                 if (!sr1.EndOfStream)
@@ -334,10 +316,10 @@ namespace onlydiff
                     }
                     #endregion
 
-                };
-            });
+                });
 
-            cmdline.Run(args);
+                p.Run(args);
+            });            
         }
     }
 }
