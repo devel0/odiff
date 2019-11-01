@@ -17,12 +17,6 @@ OnlyDiff
 - Install the tool:
 
 ```sh
-dotnet tool install -g odiff
-```
-
-- To update if already installed:
-
-```sh
 dotnet tool update -g odiff
 ```
 
